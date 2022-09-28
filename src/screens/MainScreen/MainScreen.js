@@ -9,11 +9,11 @@ export const MainScreen = () => {
 
   //FUNCTIONS
   const onContactUsPress = () => {
-    () => navigation.navigate("FormScreen");
+    navigation.navigate("FormScreen");
   };
 
   const onCatlalogPress = () => {
-    () => navigation.navigate("CatalogScreen");
+    navigation.navigate("CatalogScreen");
   };
 
   return (
