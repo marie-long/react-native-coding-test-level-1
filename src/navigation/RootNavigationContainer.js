@@ -1,7 +1,11 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { FormScreen } from "../screens/FormScreen/FormScreen";
-import { MainScreen } from "../screens/MainScreen/MainScreen";
+import {
+  CatalogDetailScreen,
+  CatalogScreen,
+  FormScreen,
+  MainScreen,
+} from "../screens";
 
 const RootStack = createStackNavigator();
 
@@ -30,6 +34,16 @@ export const RootNavigationContainer = () => {
           name="FormScreen"
           component={FormScreen}
           options={{ title: "Form Submission" }}
+        />
+        <RootStack.Screen
+          name="CatalogScreen"
+          component={CatalogScreen}
+          options={{ title: "Catalog" }}
+        />
+        <RootStack.Screen
+          name="CatalogDetailScreen"
+          component={CatalogDetailScreen}
+          options={{ title: "Detail" }}
         />
       </RootStack.Navigator>
     </NavigationContainer>
