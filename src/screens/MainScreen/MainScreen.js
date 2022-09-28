@@ -1,26 +1,30 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  StatusBar,
-} from "react-native";
+import { StyleSheet, View, StatusBar } from "react-native";
+import { TextButton } from "../../components";
 
 export const MainScreen = () => {
+  //USE NAVIGATION
   const navigation = useNavigation();
+
+  //FUNCTIONS
+  const onContactUsPress = () => {
+    navigation.navigate("FormScreen");
+  };
+
+  const onCatlalogPress = () => {
+    navigation.navigate("CatalogScreen");
+  };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        style={styles.button}
-        onPress={() => navigation.navigate("FormScreen")}
-      >
-        <Text>Contact Us</Text>
-      </TouchableOpacity>
       <StatusBar style="auto" />
+      <TextButton onPress={onContactUsPress} />
+      <TextButton
+        text="View Catalog"
+        buttonStyle={{ marginTop: 10 }}
+        onPress={onCatlalogPress}
+      />
     </View>
   );
 };
@@ -32,10 +36,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-  button: {
-    backgroundColor: "orange",
-    padding: 10,
-    borderRadius: 10,
   },
 });

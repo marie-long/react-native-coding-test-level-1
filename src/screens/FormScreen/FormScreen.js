@@ -7,7 +7,7 @@ import {
   Modal,
   Keyboard,
 } from "react-native";
-import RNDateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import validator from "validator";
 import _ from "lodash";
 import moment from "moment";
@@ -18,23 +18,27 @@ export const FormScreen = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [showPicker, setShowPicker] = useState(false);
-  const [selectDate, setSelectDate] = useState(new Date());
   const [dateText, setDateText] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
   //FUCTIONS
   const openDatePicker = () => {
-    setShowPicker(!showPicker);
+    setShowPicker(true);
+  };
+
+  const closeDatePicker = () => {
+    setShowPicker(false);
+  };
+
+  const handleConfirmDate = (date) => {
+    console.log("date picked:", date);
+    setDateText(moment(date).format("DD/MMMM/YYYY"));
+    closeDatePicker();
   };
 
   const handleOnSubmit = () => {
     if (_.isEmpty(userName.trim())) {
       alert("Username cannot be empty");
-      return;
-    }
-
-    if (userName.trim().length > 50) {
-      alert("Username cannot be longer than 50 character.");
       return;
     }
 
@@ -63,6 +67,7 @@ export const FormScreen = () => {
         placeholder="Username"
         style={formStyle.textInput}
         value={userName}
+        maxLength={50}
         onChangeText={(value) => setUserName(value)}
       />
       <TextInput
@@ -103,32 +108,13 @@ export const FormScreen = () => {
           </View>
         </View>
       </Modal>
-
-      <Modal animationType="slide" transparent={true} visible={showPicker}>
-        <View
-          style={[formStyle.modalWrapper, { backgroundColor: "transparent" }]}
-          onTouchStart={() => setShowPicker(false)}
-        />
-        <RNDateTimePicker
-          value={selectDate}
-          mode="date"
-          maximumDate={new Date()}
-          display="spinner"
-          style={{
-            borderRadius: 10,
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            backgroundColor: "white",
-          }}
-          time
-          onChange={(event, date) => {
-            setSelectDate(date);
-            setDateText(moment(date).format("DD/MMMM/YYYY"));
-          }}
-        />
-      </Modal>
+      <DateTimePickerModal
+        isVisible={showPicker}
+        mode="date"
+        onConfirm={handleConfirmDate}
+        onCancel={() => setShowPicker(false)}
+        maximumDate={new Date()}
+      />
     </View>
   );
 };
